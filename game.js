@@ -60,13 +60,18 @@ $(document).ready(function()
 	ChangeColor(myColor);
 	ChangeComputerCol(compColor);
 
-	
+
 	/* Comp vs. Comp */
-	//CompVsComp();
+	//
+	//http://www.designchemical.com/blog/index.php/jquery/get-url-parameters-using-jquery/
+	//
+    var url=document.URL.split('#')[1];
+    if(url != undefined && url == 'auto')
+    {
+    	CompVsComp();
+    }
 	
-	
-	
-	/**** SETUP PLAYING BUTTONS ****/
+	/**** SETUP PLAYING BUTTONS ****/  	
 	$('#buttons .red').click(function()
 	{
 		if(myColor != RED && compColor != RED)

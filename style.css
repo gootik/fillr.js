@@ -1,4 +1,4 @@
-#game {width: 400px;}
+#game {width: 400px;float: left;}
 #buttons {float: left;margin-left: 50px;}
 
 .block {width: 40px;height: 40px;float: left;-moz-box-shadow: inset 0 0 5px #ddd;-webkit-box-shadow: inset 0 0 5px #ddd;box-shadow: inner 0 0 5px #ddd;} 
