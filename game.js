@@ -1,7 +1,8 @@
 /** SETTINGS **/
 var moves = -1;
 var map = new Array();
-var colors = ['red','blue','yellow','green','pink','purple'];
+//var colors = ['red','blue','yellow','green','pink','purple'];
+var colors = ['red','blue','yellow','green'];
 var turn  = 0;
 		
 var WIDTH = 15;
@@ -29,7 +30,7 @@ $(document).ready(function()
 		map[x] = new Array();
 		for(var y=0;y<HEIGHT;y++)
 		{
-			var random = Math.floor(Math.random()*colors.length)
+			var random = Math.floor(Math.random()*colors.length);
 			var assigned = 0;
 			if(x==0 && y==0)
 			{
@@ -147,6 +148,7 @@ function CompVsComp()
 	}
 }
 
+var movChanger = 1;
 function ComputerMove()
 {	
 	//GREEDY TOWARDS THE MIDDLE
@@ -163,11 +165,22 @@ function ComputerMove()
 			if(obj.assigned == COMPUTER && center.assigned == 0)
 			{
 				var dist = Math.sqrt(((obj.x - (Math.floor(WIDTH/2) - 1 ))^2) + ((obj.y - (Math.floor(HEIGHT/2) - 1 ))^2));
-				//var dist = 0;
-				//var dist = Math.sqrt((obj.x )^2 + (obj.y)^2);
 				if(dist < minDist)
 				{
-					var tempObj = map[x][y-1];
+					
+					
+					var tempObj;
+					if(movChanger == 1)
+					{
+						tempObj = map[x][y-1];
+						moveChanger = 0;
+					}
+					else
+					{
+						tempObj = map[x-1][y];
+						moveChanger = 1;
+					}
+					
 					if(tempObj.color != myColor && tempObj.color != compColor)
 					{
 						bestCol = tempObj.color;
@@ -192,14 +205,14 @@ function ComputerMove()
 				for(var y=0;y<HEIGHT;y++)
 				{
 					var obj = map[x][y];
-					if(obj.assigned == HUMAN)
+					if(obj.assigned == COMPUTER)
 					{
 						if(x > 0)
 						{
 							var tempObj = map[x-1][y];
 							if(tempObj.assigned == 0 && tempObj.color == col)
 							{
-								moveCount++								
+								moveCount++;						
 							}
 						}
 						
@@ -236,7 +249,6 @@ function ComputerMove()
 			bestMove[col] = moveCount;
 		}
 		
-		//FUCK IT RANDOM IT IS
 		var maxCount = 0;
 		for(var i=0;i<colors.length;i++)
 		{
@@ -250,7 +262,7 @@ function ComputerMove()
 	
 	if(bestCol == -1)
 	{
-		var t = 1
+		var t = 1;
 		bestCol = (compColor + t) % colors.length;
 		while(bestCol == compColor || bestCol == myColor )
 		{
@@ -312,7 +324,7 @@ function ComputerMove2()
 							var tempObj = map[x-1][y];
 							if(tempObj.assigned == 0 && tempObj.color == col)
 							{
-								moveCount++								
+								moveCount++;							
 							}
 						}
 						
@@ -363,7 +375,7 @@ function ComputerMove2()
 	
 	if(bestCol == -1)
 	{
-		var t = 1
+		var t = 1;
 		bestCol = (compColor + t) % colors.length;
 		while(bestCol == compColor || bestCol == myColor )
 		{
