@@ -24,6 +24,8 @@ var compColor = -1;
 
 $(document).ready(function()
 {
+	//SETUP THE MAP
+	
 	$('#game').css('width',WIDTH*40);	
 	for(var x=0;x<WIDTH;x++)
 	{
@@ -52,17 +54,19 @@ $(document).ready(function()
 			map[x][y] = obj;
 			$('#game').append('<div id="x'+x+'y'+y+'" class="block ' + colors[random] + '">');
 		}
-		
 	}
 	
+	//Assign all the connecting colors in the begging
 	ChangeColor(myColor);
 	ChangeComputerCol(compColor);
 
 	
 	/* Comp vs. Comp */
 	//CompVsComp();
-	/*******************/
 	
+	
+	
+	/**** SETUP PLAYING BUTTONS ****/
 	$('#buttons .red').click(function()
 	{
 		if(myColor != RED && compColor != RED)
@@ -130,6 +134,9 @@ $(document).ready(function()
 });
 
 
+/**
+ * Runs a computer vs. another computer algorithm
+ */
 function CompVsComp()
 {
 	if(!CheckBoard())
@@ -148,13 +155,17 @@ function CompVsComp()
 	}
 }
 
+/**
+ * Finds the best move for the computer
+ */
 var movChanger = 1;
 function ComputerMove()
 {	
-	//GREEDY TOWARDS THE MIDDLE
+	//GREEDY TOWARDS THE CENTER
 	var minDist = 10000000;
 	var bestCol = -1;
 	
+	//Find the nearest block owned by us to the center and change color to the next nearest block to the center
 	for(var x=(WIDTH-2);x>=0;x--)
 	{
 		for(var y=(HEIGHT-2);y>=0;y--)
@@ -164,11 +175,12 @@ function ComputerMove()
 			
 			if(obj.assigned == COMPUTER && center.assigned == 0)
 			{
+				//What is the distance of this block to our "center"
 				var dist = Math.sqrt(((obj.x - (Math.floor(WIDTH/2) - 1 ))^2) + ((obj.y - (Math.floor(HEIGHT/2) - 1 ))^2));
 				if(dist < minDist)
 				{
 					
-					
+					//Alternate between going up and going left
 					var tempObj;
 					if(movChanger == 1)
 					{
@@ -181,11 +193,13 @@ function ComputerMove()
 						moveChanger = 1;
 					}
 					
+					//Make sure we have the right color
 					if(tempObj.color != myColor && tempObj.color != compColor)
 					{
 						bestCol = tempObj.color;
 					}
 					
+					//Save the minimum distance
 					minDist = dist;
 				}
 			}
@@ -275,104 +289,79 @@ function ComputerMove()
 
 }
 
-
+/**
+ * Finds the best move for algorithm 2
+ */
 function ComputerMove2()
 {	
-	//GREEDY TOWARDS THE MIDDLE
-	var minDist = 10000000;
+
 	var bestCol = -1;
-	/*for(var x=(WIDTH-2);x>=0;x--)
+	//FIND MY BEST MOVE
+	var bestMove = new Array();
+	for(var col=0;col<colors.length;col++)
 	{
-		for(var y=(HEIGHT-2);y>=0;y--)
+		var moveCount = 0;
+		for(var x=0;x<WIDTH;x++)
 		{
-			var obj = map[x][y];
-			var center = map[Math.floor(WIDTH/2) - 1][Math.floor(HEIGHT/2)-1];
-			
-			if(obj.assigned == COMPUTER && center.assigned == 0)
+			for(var y=0;y<HEIGHT;y++)
 			{
-				var dist = Math.sqrt(((obj.x - (Math.floor(WIDTH/2) - 1 ))^2) + ((obj.y - (Math.floor(HEIGHT/2) - 1 ))^2));
-				if(dist < minDist)
+				var obj = map[x][y];
+				if(obj.assigned == HUMAN)
 				{
-					var tempObj = map[x][y-1];
-					if(tempObj.color != myColor && tempObj.color != compColor)
+					if(x > 0)
 					{
-						bestCol = tempObj.color;
+						var tempObj = map[x-1][y];
+						if(tempObj.assigned == 0 && tempObj.color == col)
+						{
+							moveCount++;							
+						}
 					}
 					
-					minDist = dist;
-				}
-			}
-		}
-	}*/
-	
-	if(bestCol == -1)
-	{
-		//FIND MY BEST MOVE
-		var bestMove = new Array();
-		for(var col=0;col<colors.length;col++)
-		{
-			var moveCount = 0;
-			for(var x=0;x<WIDTH;x++)
-			{
-				for(var y=0;y<HEIGHT;y++)
-				{
-					var obj = map[x][y];
-					if(obj.assigned == HUMAN)
+					if(x < WIDTH-1)
 					{
-						if(x > 0)
+						var tempObj = map[x+1][y];
+						if(tempObj.assigned == 0 && tempObj.color == col)
 						{
-							var tempObj = map[x-1][y];
-							if(tempObj.assigned == 0 && tempObj.color == col)
-							{
-								moveCount++;							
-							}
+							moveCount++;							
 						}
-						
-						if(x < WIDTH-1)
-						{
-							var tempObj = map[x+1][y];
-							if(tempObj.assigned == 0 && tempObj.color == col)
-							{
-								moveCount++;							
-							}
-						}
-						
-						if(y > 0)
-						{
-							var tempObj = map[x][y-1];
-							if(tempObj.assigned == 0 && tempObj.color == col)
-							{
-								moveCount++;								
-							}
-						}
-						
-						if(y < HEIGHT-1)
-						{
-							var tempObj = map[x][y+1];
-							if(tempObj.assigned == 0 && tempObj.color == col)
-							{
-								moveCount++;								
-							}
-						}
-
 					}
+					
+					if(y > 0)
+					{
+						var tempObj = map[x][y-1];
+						if(tempObj.assigned == 0 && tempObj.color == col)
+						{
+							moveCount++;								
+						}
+					}
+					
+					if(y < HEIGHT-1)
+					{
+						var tempObj = map[x][y+1];
+						if(tempObj.assigned == 0 && tempObj.color == col)
+						{
+							moveCount++;								
+						}
+					}
+
 				}
 			}
-			bestMove[col] = moveCount;
 		}
-		
-		//FUCK IT RANDOM IT IS
-		var maxCount = 0;
-		for(var i=0;i<colors.length;i++)
+		bestMove[col] = moveCount;
+	}
+	
+	
+	var maxCount = 0;
+	for(var i=0;i<colors.length;i++)
+	{
+		if(bestMove[i] > maxCount && i != myColor && i != compColor)
 		{
-			if(bestMove[i] > maxCount && i != myColor && i != compColor)
-			{
-				bestCol = i;
-				maxCount = bestMove[i];
-			}
+			bestCol = i;
+			maxCount = bestMove[i];
 		}
 	}
 	
+	//FUCK IT RANDOM IT IS
 	if(bestCol == -1)
 	{
 		var t = 1;
@@ -384,10 +373,13 @@ function ComputerMove2()
 		} 
 	}
 	
+	//we are like human :( 
 	ChangeColor(bestCol);
-
 }
 
+/**
+ * Change color of the computer and assign other blocks
+ */
 function ChangeComputerCol(bestCol)
 {
 	compColor  = bestCol;
@@ -447,6 +439,9 @@ function ChangeComputerCol(bestCol)
 	}
 }
 
+/**
+ * change color of human and assign colors
+ */
 function ChangeColor(col)
 {
 	moves++;
@@ -509,6 +504,9 @@ function ChangeColor(col)
 	}
 }
 
+/**
+ * Are we done yet?
+ */
 function CheckBoard()
 {
 	var compAssigned = 0;
