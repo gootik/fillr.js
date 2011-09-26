@@ -214,9 +214,11 @@ function ComputerMove()
 		for(var col=0;col<colors.length;col++)
 		{
 			var moveCount = 0;
-			for(var x=0;x<WIDTH;x++)
+			var temps = new Array();
+			
+			for(var x=WIDTH-1;x>=0;x--)
 			{
-				for(var y=0;y<HEIGHT;y++)
+				for(var y=HEIGHT-1;y>=0;y--)
 				{
 					var obj = map[x][y];
 					if(obj.assigned == COMPUTER)
@@ -226,7 +228,13 @@ function ComputerMove()
 							var tempObj = map[x-1][y];
 							if(tempObj.assigned == 0 && tempObj.color == col)
 							{
-								moveCount++;						
+								moveCount++;
+								
+								tempObj.assigned = COMPUTER;
+								coords = new Object();
+								coords.x = tempObj.x;
+								coords.y = tempObj.y;
+								temps.push(coords);
 							}
 						}
 						
@@ -235,7 +243,13 @@ function ComputerMove()
 							var tempObj = map[x+1][y];
 							if(tempObj.assigned == 0 && tempObj.color == col)
 							{
-								moveCount++;							
+								moveCount++;	
+								
+								tempObj.assigned = COMPUTER;
+								coords = new Object();
+								coords.x = tempObj.x;
+								coords.y = tempObj.y;
+								temps.push(coords);
 							}
 						}
 						
@@ -244,7 +258,13 @@ function ComputerMove()
 							var tempObj = map[x][y-1];
 							if(tempObj.assigned == 0 && tempObj.color == col)
 							{
-								moveCount++;								
+								moveCount++;		
+								
+								tempObj.assigned = COMPUTER;
+								coords = new Object();
+								coords.x = tempObj.x;
+								coords.y = tempObj.y;
+								temps.push(coords);
 							}
 						}
 						
@@ -253,14 +273,28 @@ function ComputerMove()
 							var tempObj = map[x][y+1];
 							if(tempObj.assigned == 0 && tempObj.color == col)
 							{
-								moveCount++;								
+								moveCount++;			
+								
+								tempObj.assigned = COMPUTER;
+								coords = new Object();
+								coords.x = tempObj.x;
+								coords.y = tempObj.y;
+								temps.push(coords);
 							}
 						}
-
+						
 					}
 				}
 			}
 			bestMove[col] = moveCount;
+			
+			//reset
+			for(var i=0;i<temps.length;i++)
+			{
+				var coords = temps[i];
+				var obj = map[coords.x][coords.y];
+				obj.assigned = 0;
+			}
 		}
 		
 		var maxCount = 0;
@@ -298,9 +332,13 @@ function ComputerMove2()
 	var bestCol = -1;
 	//FIND MY BEST MOVE
 	var bestMove = new Array();
+	
+	
+	
 	for(var col=0;col<colors.length;col++)
 	{
 		var moveCount = 0;
+		var temps = new Array();
 		for(var x=0;x<WIDTH;x++)
 		{
 			for(var y=0;y<HEIGHT;y++)
@@ -313,7 +351,13 @@ function ComputerMove2()
 						var tempObj = map[x-1][y];
 						if(tempObj.assigned == 0 && tempObj.color == col)
 						{
-							moveCount++;							
+							moveCount++;
+							
+							tempObj.assigned = HUMAN;
+							coords = new Object();
+							coords.x = tempObj.x;
+							coords.y = tempObj.y;
+							temps.push(coords);
 						}
 					}
 					
@@ -322,7 +366,13 @@ function ComputerMove2()
 						var tempObj = map[x+1][y];
 						if(tempObj.assigned == 0 && tempObj.color == col)
 						{
-							moveCount++;							
+							moveCount++;
+
+							tempObj.assigned = HUMAN;
+							coords = new Object();
+							coords.x = tempObj.x;
+							coords.y = tempObj.y;
+							temps.push(coords);
 						}
 					}
 					
@@ -331,7 +381,13 @@ function ComputerMove2()
 						var tempObj = map[x][y-1];
 						if(tempObj.assigned == 0 && tempObj.color == col)
 						{
-							moveCount++;								
+							moveCount++;
+							
+							tempObj.assigned = HUMAN;
+							coords = new Object();
+							coords.x = tempObj.x;
+							coords.y = tempObj.y;
+							temps.push(coords);
 						}
 					}
 					
@@ -340,7 +396,13 @@ function ComputerMove2()
 						var tempObj = map[x][y+1];
 						if(tempObj.assigned == 0 && tempObj.color == col)
 						{
-							moveCount++;								
+							moveCount++;
+							
+							tempObj.assigned = HUMAN;
+							coords = new Object();
+							coords.x = tempObj.x;
+							coords.y = tempObj.y;
+							temps.push(coords);
 						}
 					}
 
@@ -348,6 +410,14 @@ function ComputerMove2()
 			}
 		}
 		bestMove[col] = moveCount;
+		
+		//reset
+		for(var i=0;i<temps.length;i++)
+		{
+			var coords = temps[i];
+			var obj = map[coords.x][coords.y];
+			obj.assigned = 0;
+		}
 	}
 	
 	
