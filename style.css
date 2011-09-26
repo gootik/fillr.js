@@ -1,0 +1,50 @@
+#game {width: 400px;}
+#buttons {float: left;margin-left: 50px;}
+
+.block {width: 40px;height: 40px;float: left;-moz-box-shadow: inset 0 0 5px #ddd;-webkit-box-shadow: inset 0 0 5px #ddd;box-shadow: inner 0 0 5px #ddd;} 
+			
+.red
+{
+	background-image: linear-gradient(bottom, rgb(184,0,0) 34%, rgb(255,0,0) 71%);
+	background-image: -o-linear-gradient(bottom, rgb(184,0,0) 34%, rgb(255,0,0) 71%);
+	background-image: -moz-linear-gradient(bottom, rgb(184,0,0) 34%, rgb(255,0,0) 71%);
+	background-image: -webkit-linear-gradient(bottom, rgb(184,0,0) 34%, rgb(255,0,0) 71%);
+	background-image: -ms-linear-gradient(bottom, rgb(184,0,0) 34%, rgb(255,0,0) 71%);
+	background-image: -webkit-gradient(	linear,	left bottom,	left top,	color-stop(0.34, rgb(184,0,0)),	color-stop(0.71, rgb(255,0,0)));
+}
+
+
+.blue
+{
+	background-image: linear-gradient(bottom, rgb(33,0,140) 34%, rgb(0,64,255) 71%);
+	background-image: -o-linear-gradient(bottom, rgb(33,0,140) 34%, rgb(0,64,255) 71%);
+	background-image: -moz-linear-gradient(bottom, rgb(33,0,140) 34%, rgb(0,64,255) 71%);
+	background-image: -webkit-linear-gradient(bottom, rgb(33,0,140) 34%, rgb(0,64,255) 71%);
+	background-image: -ms-linear-gradient(bottom, rgb(33,0,140) 34%, rgb(0,64,255) 71%);
+	background-image: -webkit-gradient(	linear,	left bottom,	left top,	color-stop(0.34, rgb(33,0,140)),	color-stop(0.71, rgb(0,64,255)));
+}
+
+
+.yellow
+{
+	background-image: linear-gradient(bottom, rgb(255,204,0) 34%, rgb(238,255,0) 71%);
+	background-image: -o-linear-gradient(bottom, rgb(255,204,0) 34%, rgb(238,255,0) 71%);
+	background-image: -moz-linear-gradient(bottom, rgb(255,204,0) 34%, rgb(238,255,0) 71%);
+	background-image: -webkit-linear-gradient(bottom, rgb(255,204,0) 34%, rgb(238,255,0) 71%);
+	background-image: -ms-linear-gradient(bottom, rgb(255,204,0) 34%, rgb(238,255,0) 71%);	
+	background-image: -webkit-gradient(	linear,	left bottom,	left top,	color-stop(0.34, rgb(255,204,0)),	color-stop(0.71, rgb(238,255,0)));
+}
+
+
+.green
+{
+	background-image: linear-gradient(bottom, rgb(64,133,0) 34%, rgb(11,214,0) 71%);
+	background-image: -o-linear-gradient(bottom, rgb(64,133,0) 34%, rgb(11,214,0) 71%);
+	background-image: -moz-linear-gradient(bottom, rgb(64,133,0) 34%, rgb(11,214,0) 71%);
+	background-image: -webkit-linear-gradient(bottom, rgb(64,133,0) 34%, rgb(11,214,0) 71%);
+	background-image: -ms-linear-gradient(bottom, rgb(64,133,0) 34%, rgb(11,214,0) 71%);	
+	background-image: -webkit-gradient(	linear,	left bottom,	left top,	color-stop(0.34, rgb(64,133,0)),	color-stop(0.71, rgb(11,214,0)));
+}
+
+.pink {background-color: pink;}
+.purple {background-color: purple;}
